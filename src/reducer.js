@@ -9,10 +9,12 @@ import {reducer as formReducer} from 'redux-form';
 import auth from "./reducers/auth";
 import {routerReducer} from "react-router-redux";
 import songList from "./reducers/songList";
+import song from "./reducers/song";
 
 export default combineReducers({
     auth,
     router: routerReducer,
     form: formReducer,
-    songList
+    songList,
+    song
 });

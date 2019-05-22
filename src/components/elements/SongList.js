@@ -8,6 +8,7 @@ import React from 'react';
 import Message from "./Message";
 import timeago from 'timeago.js';
 import {Link} from "react-router-dom";
+import "../css/main.css"
 
 class SongList extends React.Component {
 
@@ -27,45 +28,54 @@ class SongList extends React.Component {
                             <Link to={`/song/${song.id}`}>
                                 <div className="card-header">{song.artist}</div>
                             </Link>
-                            <div className="card-body text-primary">
-                                <h5 className="card-title">
-                                    <Link to={`/song/${song.id}`}>
-                                        {song.title}</Link>
-                                </h5>
+                            <div className="row">
+                                <div className="card-body text-primary text-left">
+                                    <div className="col-sm-9" key={song.id}>
+                                        <h5>
+                                            <Link to={`/song/${song.id}`}>
+                                                {song.title}</Link>
+                                        </h5>
+                                    </div>
+                                    <div className="col-sm-12 text-right">
+                                        <p>
+                                            Track length: {song.duration}
+                                        </p>
+                                    </div>
 
-                                <div className="row">
-                                    <div className="col-sm-3">
-                                        <p className="card-text bordet-top">
-                                            <small className="text-muted">
-                                                {timeago().format(song.published)}
-                                            </small>
-                                        </p>
-                                    </div>
-                                    <div className="col-sm-3">
-                                        <p className="card-text bordet-top">
-                                            <small className="text-muted">
-                                                {song.year}
-                                            </small>
-                                        </p>
-                                    </div>
-                                    <div className="col-sm-3">
-                                        <p className="card-text bordet-top">
-                                            <small className="text-muted">
-                                                {song.genre.name}
-                                            </small>
-                                        </p>
-                                    </div>
-                                    <div className="col-sm-3">
-                                        <p className="card-text bordet-top">
-                                            <small className="text-muted">
-                                                Added by:<br/>{song.user.name}
-                                            </small>
-                                        </p>
-                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="row">
+                                <div className="col-sm-3">
+                                    <p className="card-text bordet-top song-published">
+                                        <small className="text-muted">
+                                            {timeago().format(song.published)}
+                                        </small>
+                                    </p>
+                                </div>
+                                <div className="col-sm-3">
+                                    <p className="card-text bordet-top">
+                                        <small className="text-muted">
+                                            {song.year}
+                                        </small>
+                                    </p>
+                                </div>
+                                <div className="col-sm-3">
+                                    <p className="card-text bordet-top">
+                                        <small className="text-muted">
+                                            {song.genre.name}
+                                        </small>
+                                    </p>
+                                </div>
+                                <div className="col-sm-3">
+                                    <p className="card-text bordet-top">
+                                        <small className="text-muted">
+                                            Added by:<br/>{song.user.name}
+                                        </small>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 ))}
 

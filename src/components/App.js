@@ -13,6 +13,7 @@ import {connect} from "react-redux";
 import {userLogout, userProfileFetch, userSetId} from "../actions/actions";
 import {requests} from "../agent";
 import SongListContainer from "./containers/SongListContainer";
+import SongContainer from "./containers/SongContainer";
 
 const mapStateToProp = state => ({
     ...state.auth
@@ -66,6 +67,7 @@ class App extends React.Component {
                 <Switch>
                     <Route path="/login" component={LoginForm}/>
                     <Route path="/register" component={RegisterForm}/>
+                    <Route path="/song/:id" component={SongContainer}/>
                     <Route isAuthenticated={isAuthenticated} path="/:page?"  component={SongListContainer}/>
                 </Switch>
             </div>

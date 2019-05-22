@@ -18,3 +18,9 @@ export const SONG_LIST_RECEIVED = 'SONG_LIST_RECEIVED';
 export const SONG_LIST_ERROR = 'SONG_LIST_ERROR';
 export const SONG_LIST_ADD = 'SONG_LIST_ADD';
 export const SONG_LIST_SET_PAGE ='SONG_LIST_SET_PAGE';
+
+export const SONG_REQUEST = 'SONG_REQUEST';
+export const SONG_RECEIVED = 'SONG_RECEIVED';
+export const SONG_ERROR = 'SONG_ERROR';
+export const SONG_UNLOAD = 'SONG_UNLOAD';
+export const SONG_FORM_UNLOAD = 'SONG_FORM_UNLOAD';

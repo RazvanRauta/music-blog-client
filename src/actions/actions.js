@@ -8,8 +8,9 @@ import {requests} from "../agent";
 import {SubmissionError} from "redux-form";
 import {parseApiErrors} from "../apiUtils";
 import {
+    SONG_ERROR,
     SONG_LIST_ERROR, SONG_LIST_RECEIVED,
-    SONG_LIST_REQUEST, SONG_LIST_SET_PAGE,
+    SONG_LIST_REQUEST, SONG_LIST_SET_PAGE, SONG_RECEIVED, SONG_REQUEST, SONG_UNLOAD,
     USER_LOGIN_SUCCESS, USER_LOGOUT,
     USER_PROFILE_ERROR,
     USER_PROFILE_RECEIVED,
@@ -129,3 +130,33 @@ export const songListSetPage = (page) => ({
     type: SONG_LIST_SET_PAGE,
     page
 });
+
+//Song actions
+
+export const songRequest = () => ({
+    type: SONG_REQUEST,
+});
+
+export const songError = (error) => ({
+    type: SONG_ERROR,
+    error
+});
+
+export const songReceived = (data) => ({
+    type: SONG_RECEIVED,
+    data
+});
+
+export const songUnload = () => ({
+    type: SONG_UNLOAD
+});
+
+export const songFetch = (id) => {
+    return (dispatch) => {
+        dispatch(songRequest());
+        return requests.get(`/songs/${id}`)
+            .then(response => dispatch(songReceived(response)))
+            .catch(error => dispatch(songError(error)));
+    }
+};
+
