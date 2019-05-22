@@ -12,7 +12,8 @@ import Paginator from "../elements/Paginator";
 import {connect} from "react-redux";
 
 const mapStateToProps = state => ({
-    ...state.songList
+    ...state.songList,
+    ...state.auth
 });
 
 const mapDispatchToProps = {
@@ -64,7 +65,8 @@ class SongListContainer extends React.Component {
 
 
     render() {
-        const {songs, isFetching, currentPage, pageCount} = this.props;
+        const {songs, isFetching, currentPage, pageCount, isAuthenticated} = this.props;
+
 
         if (isFetching) {
             return (<Spinner/>);
@@ -72,7 +74,7 @@ class SongListContainer extends React.Component {
 
         return (
             <div>
-                <SongList songs={songs}/>
+                <SongList songs={songs} isAuthenticated={isAuthenticated}/>
                 <Paginator currentPage={currentPage} pageCount={pageCount}
                            setPage={this.changePage.bind(this)}
                            nextPage={this.onNextPageClick.bind(this)}

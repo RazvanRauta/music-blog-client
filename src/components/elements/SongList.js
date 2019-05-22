@@ -12,25 +12,60 @@ import {Link} from "react-router-dom";
 class SongList extends React.Component {
 
     render() {
-        const {songs} = this.props;
+        const {songs, isAuthenticated} = this.props;
+
+        console.log(this.props);
 
 
-        if (null === songs || 0 === songs.length){
-            return (<Message message = "No blog posts were found"/>);
+        if (null === songs || 0 === songs.length) {
+            return (<Message message="No blog posts were found"/>);
         }
 
-        return (<div>
+        return (<div className="row">
 
-                {songs && songs.map(song =>(
-                    <div className="card mb-3 mt-3 shadow-sm" key={song.id}>
-                        <div className="card-body">
-                            <h3><Link to={`/songs/${song.id}`}>{song.title}</Link></h3>
-                            <p className="card-text bordet-top">
-                                <small className="text-muted">
-                                    {timeago().format(song.published)}
-                                </small>
-                            </p>
-                        </div>
+                {songs && songs.map(song => (
+                    <div className="col-sm-6" key={song.id}>
+                        <Link to={`/song/${song.id}`}>
+                            <div className="card mb-3 mt-3 shadow-sm">
+                                <div className="card-header">{song.artist}</div>
+                                <div className="card-body text-primary">
+                                    <h5 className="card-title">
+                                        {song.title}
+                                    </h5>
+
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <p className="card-text bordet-top">
+                                                <small className="text-muted">
+                                                    {timeago().format(song.published)}
+                                                </small>
+                                            </p>
+                                        </div>
+                                        <div className="col-sm-3">
+                                            <p className="card-text bordet-top">
+                                                <small className="text-muted">
+                                                    {song.year}
+                                                </small>
+                                            </p>
+                                        </div>
+                                        {isAuthenticated && <div className="col-sm-3">
+                                            <p className="card-text bordet-top">
+                                                <small className="text-muted">
+                                                    {song.user}
+                                                </small>
+                                            </p>
+                                        </div>}
+                                        {isAuthenticated && <div className="col-sm-3">
+                                            <p className="card-text bordet-top">
+                                                <small className="text-muted">
+                                                    {song.genre}
+                                                </small>
+                                            </p>
+                                        </div>}
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
                 ))}
 

@@ -59,13 +59,14 @@ class App extends React.Component {
 
         const {isAuthenticated, userData, userLogout} = this.props;
 
+
         return (
             <div>
                 <Header isAuthenticated={isAuthenticated} userData={userData} logout={userLogout}/>
                 <Switch>
                     <Route path="/login" component={LoginForm}/>
                     <Route path="/register" component={RegisterForm}/>
-                    <Route path="/:page?" component={SongListContainer}/>
+                    <Route isAuthenticated={isAuthenticated} path="/:page?"  component={SongListContainer}/>
                 </Switch>
             </div>
         )
