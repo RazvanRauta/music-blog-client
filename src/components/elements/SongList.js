@@ -48,17 +48,17 @@ class SongList extends React.Component {
                                             </small>
                                         </p>
                                     </div>
-                                   <div className="col-sm-3">
-                                        <p className="card-text bordet-top">
-                                            <small className="text-muted">
-                                                {song.user.name}
-                                            </small>
-                                        </p>
-                                    </div>
-                                   <div className="col-sm-3">
+                                    <div className="col-sm-3">
                                         <p className="card-text bordet-top">
                                             <small className="text-muted">
                                                 {song.genre.name}
+                                            </small>
+                                        </p>
+                                    </div>
+                                    <div className="col-sm-3">
+                                        <p className="card-text bordet-top">
+                                            <small className="text-muted">
+                                                Added by:<br/>{song.user.name}
                                             </small>
                                         </p>
                                     </div>
