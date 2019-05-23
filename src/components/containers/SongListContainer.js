@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import {songListFetch, songListSetPage} from "../../actions/actions";
+import {songListFetch, songListSetPage, songListSort} from "../../actions/actions";
 import Spinner from "../elements/Spinner";
 import SongList from "../elements/SongList";
 import Paginator from "../elements/Paginator";
@@ -18,7 +18,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     songListFetch,
-    songListSetPage
+    songListSetPage,
+    songListSort
+
 };
 
 class SongListContainer extends React.Component {
@@ -29,14 +31,15 @@ class SongListContainer extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        const {currentPage, songListFetch, songListSetPage} = this.props;
+        const {currentPage, songListSetPage,songListSort,link} = this.props;
+
 
         if (prevProps.match.params.page !== this.getQueryParamPage()) {
             songListSetPage(this.getQueryParamPage());
         }
 
         if (prevProps.currentPage !== currentPage)
-            songListFetch(currentPage);
+            songListSort(link,currentPage);
     }
 
     getQueryParamPage() {
@@ -63,6 +66,13 @@ class SongListContainer extends React.Component {
 
     }
 
+    onSelect(option){
+
+         const{history,songListSort,currentPage} = this.props;
+        songListSort(option,currentPage);
+        history.push(`/${option}&page=${currentPage}`)
+    }
+
 
     render() {
         const {songs, isFetching, currentPage, pageCount, isAuthenticated} = this.props;
@@ -74,7 +84,7 @@ class SongListContainer extends React.Component {
 
         return (
             <div>
-                <SongList songs={songs} isAuthenticated={isAuthenticated}/>
+                <SongList songs={songs} sort={this.onSelect.bind(this)} isAuthenticated={isAuthenticated}/>
                 <Paginator currentPage={currentPage} pageCount={pageCount}
                            setPage={this.changePage.bind(this)}
                            nextPage={this.onNextPageClick.bind(this)}

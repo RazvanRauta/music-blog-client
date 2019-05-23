@@ -6,7 +6,6 @@
 
 import {
     SONG_REQUEST,
-    SONG_ADD,
     SONG_RECEIVED,
     SONG_ERROR, SONG_UNLOAD
 } from "../actions/constants";

@@ -8,7 +8,7 @@ import {
     SONG_LIST_REQUEST,
     SONG_LIST_ADD,
     SONG_LIST_RECEIVED,
-    SONG_LIST_ERROR, SONG_LIST_SET_PAGE
+    SONG_LIST_ERROR, SONG_LIST_SET_PAGE, SONG_FORM_UNLOAD
 } from "../actions/constants";
 import {hydraPageCount} from "../apiUtils";
 
@@ -16,13 +16,14 @@ export default (state = {
     songs: null,
     isFetching: false,
     currentPage: 1,
-    pageCount: null
+    pageCount: null,
+    link:null
 }, action) => {
     switch (action.type) {
         case SONG_LIST_REQUEST:
             state = {
                 ...state,
-                isFetching: true
+                isFetching: true,
             };
             return state;
 
@@ -31,8 +32,10 @@ export default (state = {
                 ...state,
                 songs: action.data['hydra:member'],
                 pageCount: hydraPageCount(action.data),
-                isFetching: false
+                isFetching: false,
+                link:action.link
             };
+
             return state;
 
         case SONG_LIST_ERROR:
@@ -52,7 +55,13 @@ export default (state = {
         case SONG_LIST_SET_PAGE:
             return {
                 ...state,
-                currentPage: action.page
+                currentPage: action.page,
+
+            };
+
+        case SONG_FORM_UNLOAD:
+            return {
+                ...state,
             };
 
         default:

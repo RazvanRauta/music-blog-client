@@ -8,7 +8,7 @@ import {requests} from "../agent";
 import {SubmissionError} from "redux-form";
 import {parseApiErrors} from "../apiUtils";
 import {
-    SONG_ERROR,
+    SONG_ERROR, SONG_FORM_UNLOAD,
     SONG_LIST_ERROR, SONG_LIST_RECEIVED,
     SONG_LIST_REQUEST, SONG_LIST_SET_PAGE, SONG_RECEIVED, SONG_REQUEST, SONG_UNLOAD,
     USER_LOGIN_SUCCESS, USER_LOGOUT,
@@ -105,6 +105,7 @@ export const userProfileFetch = (userId) => {
 
 export const songListRequest = () => ({
     type: SONG_LIST_REQUEST,
+
 });
 
 export const songListError = (error) => ({
@@ -112,12 +113,14 @@ export const songListError = (error) => ({
     error
 });
 
-export const songListReceived = (data) => ({
+export const songListReceived = (data, link) => ({
     type: SONG_LIST_RECEIVED,
-    data
+    data,
+    link
 });
 
-export const songListFetch = (page =1) => {
+export const songListFetch = (page = 1) => {
+
     return (dispatch) => {
         dispatch(songListRequest());
         return requests.get(`/songs?page=${page}`)
@@ -126,10 +129,56 @@ export const songListFetch = (page =1) => {
     }
 };
 
-export const songListSetPage = (page) => ({
+export const songListSetPage = (page, link) => ({
     type: SONG_LIST_SET_PAGE,
-    page
+    page,
+    link
 });
+
+export const songListSort = (option, page = 1) => {
+
+    let value;
+
+    switch (option) {
+
+        case 'artistAsc':
+            value = '[artist]=asc';
+            break;
+
+        case 'artistDesc':
+            value = '[artist]=desc';
+            break;
+
+        case 'yearAsc':
+            value = '[year]=asc';
+            break;
+
+        case 'yearDesc':
+            value = '[year]=desc';
+            break;
+
+        case 'trackAsc':
+            value = '[duration]=asc';
+            break;
+
+        case 'trackDesc':
+            value = '[duration]=desc';
+            break;
+
+        default:
+            value = '[published]=desc';
+            break;
+
+    }
+
+    return (dispatch) => {
+        dispatch(songListRequest());
+        return requests.get(`/songs?_order${value}&page=${page}`)
+            .then(response => dispatch(songListReceived(response, value)))
+            .catch(error => dispatch(songListError(error)));
+    }
+
+};
 
 //Song actions
 
@@ -159,4 +208,43 @@ export const songFetch = (id) => {
             .catch(error => dispatch(songError(error)));
     }
 };
+
+//Song Upload
+
+export const songAdd = (title, artist, genreName) => {
+    let minutes = Math.floor(Math.random() * 10) + 1;
+    let seconds = Math.floor(Math.random() * 59) + 1;
+    let duration = minutes + ":" + seconds;
+
+    let year = parseInt(Math.random() * (2019 - 1980) + 1980,10);
+
+    return (dispatch) => {
+        return requests.post(
+            '/songs',
+            {
+                "title": title,
+                "artist": artist,
+                "year": year,
+                "duration": duration,
+                "genre": {
+                    "name": genreName
+
+                }
+            }
+        ).catch((error) => {
+            if (401 === error.response.status) {
+                return dispatch(userLogout());
+            } else if (403 === error.response.status) {
+                throw new SubmissionError({
+                    _error: 'You do not have rights to publish songs!'
+                });
+            }
+            throw new SubmissionError(parseApiErrors(error));
+        })
+    }
+};
+
+export const songFormUnload = () => ({
+    type: SONG_FORM_UNLOAD
+});
 

@@ -14,6 +14,8 @@ import {userLogout, userProfileFetch, userSetId} from "../actions/actions";
 import {requests} from "../agent";
 import SongListContainer from "./containers/SongListContainer";
 import SongContainer from "./containers/SongContainer";
+import SongAddForm from "./forms/SongAddForm";
+
 
 const mapStateToProp = state => ({
     ...state.auth
@@ -68,6 +70,7 @@ class App extends React.Component {
                     <Route path="/login" component={LoginForm}/>
                     <Route path="/register" component={RegisterForm}/>
                     <Route path="/song/:id" component={SongContainer}/>
+                    <Route path="/song-form" component={SongAddForm}/>
                     <Route isAuthenticated={isAuthenticated} path="/:page?"  component={SongListContainer}/>
                 </Switch>
             </div>

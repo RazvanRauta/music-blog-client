@@ -15,6 +15,9 @@ import {createBrowserHistory} from "history";
 import App from "./components/App";
 import {tokenMiddleware} from "./middleware";
 import thunkMiddleware from "redux-thunk";
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
 
 
 const store = createStore(

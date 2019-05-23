@@ -4,7 +4,7 @@
  * Time: 11:13
 */
 
-import {USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_ERROR} from "./actions/constants";
+import {SONG_LIST_RECEIVED, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_ERROR} from "./actions/constants";
 import {requests} from "./agent";
 import {userLogout} from "./actions/actions";
 
@@ -28,6 +28,10 @@ export const tokenMiddleware = store => next => action => {
             if (state.userId === action.userId && state.userData === null){
                 store.dispatch(userLogout())
             }
+            break;
+
+        case SONG_LIST_RECEIVED:
+            window.localStorage.setItem('link',action.link);
             break;
 
 

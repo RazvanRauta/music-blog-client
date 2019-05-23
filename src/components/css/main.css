@@ -1,6 +1,22 @@
-.song-published{
+.song-element{
     padding-left: 1rem;
 }
 .song-user-name{
     padding-right: 1rem;
+}
+.mySelect{
+    width: 200px;
+}
+.songsRow{
+    padding-top: 1rem;
+}
+.col-order{
+    width: 100%;
+    margin-right: 2rem;
+    margin-left: 2rem;
+    padding-left: 2rem;
+
+}
+.songFormBtn{
+    padding-top: 1rem;
 }
